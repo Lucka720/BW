@@ -5,67 +5,56 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Brawl World VIP</title>
     <style>
-        body {
-            background-color: #1c252e;
-            color: white;
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 0;
-            padding: 0;
-        }
-        .header {
-            background-color: #7a0000;
-            padding: 20px;
-            font-size: 24px;
-            font-weight: bold;
-        }
-        .container {
-            padding: 20px;
-        }
-        .btn {
-            display: inline-block;
-            background-color: #ff0000;
-            color: white;
-            padding: 15px 30px;
-            margin: 10px;
-            text-decoration: none;
-            border-radius: 5px;
-            font-weight: bold;
-        }
-        .vip-input {
-            padding: 10px;
-            border-radius: 5px;
-            border: none;
-            margin-top: 20px;
-        }
+        body { background: radial-gradient(circle, #2c0000, #000000); color: white; font-family: 'Arial Black', sans-serif; text-align: center; margin: 0; padding: 0; }
+        .header { background: linear-gradient(to bottom, #ff0000, #7a0000); padding: 25px; font-size: 30px; border-bottom: 5px solid #ffcc00; box-shadow: 0 5px 20px rgba(255, 0, 0, 0.5); text-transform: uppercase; }
+        .container { padding: 30px 15px; }
+        .char-img { width: 280px; margin: 20px 0; filter: drop-shadow(0 0 15px #ff0000); transition: 0.3s; }
+        .char-img:hover { filter: drop-shadow(0 0 35px #ffcc00); transform: scale(1.08); }
+        .price { font-size: 36px; color: #ffcc00; margin: 15px 0; text-shadow: 0 0 10px #ffcc00; }
+        .btn { display: block; width: 85%; max-width: 350px; margin: 15px auto; padding: 18px; border-radius: 15px; text-decoration: none; color: white; font-size: 20px; font-weight: bold; transition: 0.3s; border: 3px solid rgba(255,255,255,0.3); }
+        .btn-boosty { background: #ff4500; box-shadow: 0 0 20px #ff4500; }
+        .btn-paypal { background: #003087; box-shadow: 0 0 20px #003087; }
+        .btn-tg { background: #24A1DE; box-shadow: 0 0 20px #24A1DE; }
+        .btn:hover { transform: translateY(-5px); filter: brightness(1.2); }
+        .vip-card { background: rgba(0,0,0,0.8); border: 3px dashed #ffcc00; padding: 25px; margin-top: 40px; border-radius: 25px; }
+        .vip-input { padding: 15px; border-radius: 10px; border: 2px solid #ffcc00; width: 80%; max-width: 250px; font-size: 18px; background: #111; color: white; margin-bottom: 15px; }
+        #vipContent { display: none; }
     </style>
 </head>
 <body>
-    <div class="header">BRAWL WORLD VIP SHOP</div>
-    <div class="container">
-        <h1>ЭКСКЛЮЗИВНЫЕ ПРЕДЛОЖЕНИЯ</h1>
-        <p>Получи доступ к секретным бойцам и гемам прямо сейчас!</p>
-        
-        <a href="https://boosty.to/brawl.vip.world/donate" class="btn">КУПИТЬ ЧЕРЕЗ BOOSTY</a><br>
-        <a href="https://paypal.me/denysdidenko329" class="btn">КУПИТЬ ЧЕРЕЗ PAYPAL</a>
-
-        <div style="margin-top: 40px;">
-            <h3>ЕСТЬ VIP КЛЮЧ? ВВОДИ:</h3>
-            <input type="text" id="vipKey" class="vip-input" placeholder="Введите код...">
-            <button onclick="checkKey()" class="btn" style="padding: 10px;">ВОЙТИ</button>
+    <div id="shopContent">
+        <div class="header">BRAWL WORLD VIP SHOP</div>
+        <div class="container">
+            <img src="images/leon.png" class="char-img">
+            <div class="price">120₽ (1.30$)</div>
+            <a href="https://boosty.to/brawl.vip.world/donate" class="btn btn-boosty">КУПИТЬ ЧЕРЕЗ BOOSTY</a>
+            <a href="https://paypal.me/denysdidenko329" class="btn btn-paypal">КУПИТЬ ЧЕРЕЗ PAYPAL</a>
+            <div class="vip-card">
+                <h3>ЕСТЬ VIP КЛЮЧ? ВВОДИ:</h3>
+                <input type="text" id="vipKey" class="vip-input" placeholder="Введите код...">
+                <button onclick="checkKey()" class="btn" style="background:#222; width:180px; display:inline-block; border:1px solid #ffcc00;">ВОЙТИ</button>
+            </div>
+            <a href="https://t.me/Lucka720" class="btn btn-tg" style="margin-top:40px; font-size: 16px;">СВЯЗЬ С РАЗРАБОТЧИКОМ</a>
         </div>
     </div>
-
+    <div id="vipContent">
+        <div class="header" style="background: linear-gradient(to bottom, #ffcc00, #b8860b); color: black;">VIP ZONE</div>
+        <div class="container">
+            <img src="vip.images/gold_skin.png" style="width:300px; filter: drop-shadow(0 0 20px #ffcc00);">
+            <h1 style="color:#ffcc00;">ДОСТУП РАЗРЕШЕН!</h1>
+            <button onclick="logout()" style="color:grey; background:none; border:none; text-decoration:underline; margin-top:40px;">Выйти</button>
+        </div>
+    </div>
     <script>
+        window.onload = function() { if (localStorage.getItem('isBrawlVip') === 'true') { showVip(); } }
         function checkKey() {
-            const key = document.getElementById('vipKey').value;
-            if (key === 'AX-5670') {
-                alert('ДОСТУП РАЗРЕШЕН! Добро пожаловать в VIP зону.');
-                window.location.href = 'https://lucka720.github.io/Brawl-World/vip.html';
-            } else {
-                alert('НЕВЕРНЫЙ КЛЮЧ!');
-            }
+            if (document.getElementById('vipKey').value === 'AX-5670') {
+                localStorage.setItem('isBrawlVip', 'true');
+                showVip();
+            } else { alert('НЕВЕРНЫЙ КЛЮЧ!'); }
         }
+        function showVip() { document.getElementById('shopContent').style.display = 'none'; document.getElementById('vipContent').style.display = 'block'; }
+        function logout() { localStorage.removeItem('isBrawlVip'); location.reload(); }
     </script>
 </body>
 </html>
