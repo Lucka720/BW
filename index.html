@@ -111,8 +111,8 @@
         }
 
         function logout() {
-            localStorage.removeItem('isBrawlVip');
-            location.reload();
+            document.getElementById('vipContent').style.display = 'none';
+            document.getElementById('shopContent').style.display = 'block';
         }
     </script>
 </body>
